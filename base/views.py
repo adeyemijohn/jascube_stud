@@ -6,9 +6,8 @@ from django.db.models import Q
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import UserCreationForm
 from .models import Room, Topic, Message
-from .forms import RoomForm, UserForm
+from .forms import RoomForm, UserForm, UserCreationForm
 
 # Create your views here.
 
@@ -76,7 +75,6 @@ def home(request):
     topics = Topic.objects.all()[0:5]
     room_count = rooms.count()
     room_messages = Message.objects.filter(Q(room__topic__name__icontains=q))
-
 
     context = {'rooms': rooms, 'topics': topics, 'room_count': room_count, 'room_messages': room_messages}
     return render(request, 'base/home.html', context)
